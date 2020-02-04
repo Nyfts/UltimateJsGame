@@ -43,37 +43,55 @@ function startGame(){
 window.addEventListener("keydown", function (e) {
     if (e.keyCode === 65){
         // Press "A" then move to the left
-        entity[playerIndex].isMoving = true;
-        entity[playerIndex].direction = "left";
+        leftDown();
     } else if(e.keyCode === 68 ){
         // Press "D" then move to the right
-        entity[playerIndex].isMoving = true;
-        entity[playerIndex].direction = "right";
+        rightDown();
     } else if(e.keyCode === 87){
         // Press "W" then jump
-        if(entity[playerIndex].isJumping === false){
+        upDown();
+    }
+});
+
+function leftDown(){
+    entity[playerIndex].isMoving = true;
+    entity[playerIndex].direction = "left";
+}
+function leftUp(){
+    if (entity[playerIndex].direction == "left"){
+        entity[playerIndex].isMoving = false;
+    }
+    entity[playerIndex].acceleration = 0;
+}
+function rightDown(){
+    entity[playerIndex].isMoving = true;
+    entity[playerIndex].direction = "right";
+}
+function rightUp(){
+    if (entity[playerIndex].direction == "right"){
+            entity[playerIndex].isMoving = false;
+        }
+        entity[playerIndex].acceleration = 0;
+}
+function upDown(){
+    if(entity[playerIndex].isJumping === false){
             // When player jump, send an negative gravityAcceleration making the gravity goes to the
             // oposite direction, when the acceleration return to > 0, the player falls.
             // The smallest is the gravityAcceleration, higher is the jump
             entity[playerIndex].isJumping = true;
             entity[playerIndex].gravityAcceleration = -1.3;
-        }
     }
-});
+}
+
 
 window.addEventListener("keyup", function (e) {
     if (e.keyCode === 65){
         // Release "A" then stop move left
-        if (entity[playerIndex].direction == "left"){
-            entity[playerIndex].isMoving = false;
-        }
-        entity[playerIndex].acceleration = 0;
+        leftUp();
+        
    } else if(e.keyCode === 68){
         // Release "D" then stop move right
-        if (entity[playerIndex].direction == "right"){
-            entity[playerIndex].isMoving = false;
-        }
-        entity[playerIndex].acceleration = 0;
+        rightUp();
    }
 });
 

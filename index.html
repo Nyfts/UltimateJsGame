@@ -45,6 +45,11 @@
     font-size: 20px;
     margin: 0 5px;
  }
+ 
+ .keypad{
+    width: 25vw;
+    height: 25vw;
+ }
 
 </style>
 </head>
@@ -58,6 +63,12 @@
     <div style="display: flex; width: 700px; margin: 30px auto">
         <div style="display: inherit"><h4>Wave:</h4><h5  id="wave" style="font-weight: 500">00</h5></div>
         <div style="display: inherit; margin-left: auto"><h4>Time:</h4><h5 id="timer" style="font-weight: 500">00:00</h5></div>
+    </div>
+    <div id="keyboard">
+        <center>
+        <button class="keypad" onmousedown="upDown()">up</button><br>
+        <button class="keypad" onmousedown="leftDown()" onmouseup="leftUp()">left</button><button class="keypad">down</button><button class="keypad" onmousedown="rightDown()" onmouseup="rightUp()">right</button>
+        </center>
     </div>
 
 <script src="engine.js"></script>
