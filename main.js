@@ -13,7 +13,6 @@ var start = false;
 
 window.onload = function(){ 
     // Called once at beggining
-    
 	/*;
     
     CreateEntity("enemy2", 100, 185);
@@ -82,7 +81,6 @@ function upDown(){
             entity[playerIndex].gravityAcceleration = -1.3;
     }
 }
-
 
 window.addEventListener("keyup", function (e) {
     if (e.keyCode === 65){
