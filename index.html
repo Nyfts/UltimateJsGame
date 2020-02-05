@@ -8,6 +8,7 @@
 body{
     margin-top: 50px;
     user-select: none;
+    background-color:  white;
 }
 
 #canvas{
@@ -53,7 +54,8 @@ body{
 
 </style>
 </head>
-<body>
+<body id="body">
+    <button style="position: absolute; top: 0; left: 0;" onclick="invert()">CLICKA</button>
     <h1 style="font-weight: 900">Ultimate JS Game</h1>
     <h2 style="font-weight: 500">Use WASD to control the player</h2>
     <h3 style="font-weight: 300">Don't get touched by the enemys, survive as long as you can!!</h3>
@@ -61,8 +63,8 @@ body{
         <button onClick="startGame(); document.getElementById('start-btn').remove();" id="start-btn">Start</button>
     </div>
     <div style="display: flex; width: 700px; margin: 30px auto">
-        <div style="display: inherit"><h4>Wave:</h4><h5  id="wave" style="font-weight: 500">00</h5></div>
-        <div style="display: inherit; margin-left: auto"><h4>Time:</h4><h5 id="timer" style="font-weight: 500">00:00</h5></div>
+        <!--<div style="display: inherit"><h4>Wave:</h4><h5  id="wave" style="font-weight: 500">00</h5></div>-->
+        <div style="display: inherit; margin-left: auto"><h4>Score:</h4><h5 id="score" style="font-weight: 500">00</h5></div>
     </div>
     <div id="keyboard">
         <center>

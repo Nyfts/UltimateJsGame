@@ -1,4 +1,9 @@
 /* THE CANVAS HAS 400x200(x,y) PIXELS... EACH PIXEL EQUALS TO 1.75px*/
+var i = 0;
+function invert(){
+    document.getElementById("body").style.filter = "invert(100%)";
+    document.getElementById("body").style.backgroundColor = "black";
+}
 
 var mobileAndTabletcheck = function() {
   var check = false;
@@ -8,9 +13,6 @@ var mobileAndTabletcheck = function() {
 
 /* DECLARATIONS */
 var player;
-var minutes = 0;
-var seconds = 0;
-var wave = 0;
 var start = false;
 
 /* GAME EVENTS begin */
@@ -33,7 +35,7 @@ function startGame() {
   player.object.style.backgroundColor = "blue";
   player.object.style.zIndex = 1000;
   player.object.style.opacity = "1";
-  updateTime();
+  startScore();
 }
 
 /* GAME EVENTS begin */
@@ -113,15 +115,15 @@ function collision() {
         entity[i].posX - 15 < player.posX && player.posX < entity[i].posX + 15 &&
         entity[i].posY - 15 < player.posY && player.posY < entity[i].posY + 15
       ) {
-        gameOver();
+        if (entity[i].collision){
+          gameOver();
+        }
       }
     }
   }
 }
 
 function gameOver() {
-
-  alert("Perdeu kk");
 
   for (i = 0; i < entity.length; i++) {
     canvas.removeChild(entity[i].object);
@@ -130,52 +132,26 @@ function gameOver() {
   entity = []
   canvas.innerHTML = '<button onClick="startGame(); document.getElementById(\'start-btn\').remove();" id="start-btn">Start</button>';
   clearInterval(timerSec);
-  clearTimer();
 }
 
-function updateTimerLabel() {
-  var timer = "";
-  if (minutes < 10 && seconds < 10) {
-    timer = "0" + minutes + ":" + "0" + seconds;
-  } else if (minutes < 10 && seconds >= 10) {
-    timer = "0" + minutes + ":" + seconds;
-  } else if (minutes >= 10 && seconds < 10) {
-    timer = minutes + ":" + "0" + seconds;
-  }
-
-  document.getElementById("timer").innerHTML = timer;
-}
-
-function clearTimer() {
-  minutes = 0;
-  seconds = 0;
-  wave = 0;
-  document.getElementById("wave").innerHTML = "00"
-}
-
-function updateTime() {
+var score = 0;
+function startScore() {
+  score = 0;
+  document.getElementById("score").innerHTML = "00";
   window.timerSec = setInterval(function() {
-    updateWave();
-    seconds++;
-    if (seconds === 60) {
-      seconds = 0;
-      minutes++;
+    score++;
+
+    if (score < 10) {
+      document.getElementById("score").innerHTML = "0" + score;
+    } else{
+      document.getElementById("score").innerHTML = score;
     }
-    updateTimerLabel();
+    
+    if (score === 1 || score % 10 === 0){
+      let lucky = Math.floor(Math.random() * 10) + 1
+      spawnEnemy();
+    }
   }, 1000);
-}
-
-function updateWave() {
-  if (seconds % 10 === 0) {
-    wave++;
-    if (wave < 10) {
-      document.getElementById("wave").innerHTML = "0" + wave;
-    } else {
-      document.getElementById("wave").innerHTML = wave;
-    }
-
-    spawnEnemy();
-  }
 }
 
 function spawnEnemy(){
@@ -215,6 +191,9 @@ function spawnEnemy(){
   setTimeout(function(){
     _this.object.style.opacity = "1";
   }, 100);
+  setTimeout(function(){
+    _this.collision = true;
+  }, 2000);
   
 }
 
