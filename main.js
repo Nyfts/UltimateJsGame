@@ -110,26 +110,76 @@ function randomizeColor(entity, red, green, blue) {
 
 function collision() {
   for (i = 0; i < entity.length; i++) {
-    if (entity[i].name != "player") {
-      if (
-        entity[i].posX - 15 < player.posX && player.posX < entity[i].posX + 15 &&
-        entity[i].posY - 15 < player.posY && player.posY < entity[i].posY + 15
-      ) {
-        if (entity[i].collision){
-          gameOver();
+    if (entity[i] != null){
+      if (entity[i].name != "player") {
+        if (
+          entity[i].posX - 15 < player.posX && player.posX < entity[i].posX + 15 &&
+          entity[i].posY - 15 < player.posY && player.posY < entity[i].posY + 15
+        ) {
+          if (entity[i].collision){
+            if(entity[i].name.substring(0, 5) == "enemy"){
+              gameOver();
+            } else{
+              powerUp(i);
+            }
+          }
         }
       }
     }
   }
 }
 
+function powerUp(i){
+  if (typeof entity[i].object === "object" && entity[j] !== null){
+    canvas.removeChild(entity[i].object);
+    entity[i] = null;
+  }
+  
+
+  let lucky = Math.floor(Math.random() * 2);
+  // let lucky = 1;
+
+  if (lucky === 0){
+    var j = 0;
+    let deleted = true;
+    for (j = 0; j < entity.length; j++){
+      if (typeof entity[j] === "object" && entity[j] !== null){
+        if (entity[j].name.substring(0, 5) == "enemy"){
+          canvas.removeChild(entity[j].object);
+          entity[j] = null;
+          console.log("quebro");
+          break;
+        }
+      }
+    }
+  } else if (lucky === 1){
+    for (j = 0; j < entity.length; j++){
+      if (typeof entity[j] === "object" && entity[j] !== null){
+        entity[j].increX = entity[j].increX / 2
+        entity[j].increY = entity[j].increY / 2
+        entity[j].affected = true;
+      }
+    }
+    setTimeout(() => {
+      for (j = 0; j < entity.length; j++){
+        if (typeof entity[j] === "object" && entity[j] !== null && entity[j].affected){
+          entity[j].increX = entity[j].increX * 2
+          entity[j].increY = entity[j].increY * 2
+        }
+      }
+    },10000)
+  }
+}
+
 function gameOver() {
 
   for (i = 0; i < entity.length; i++) {
-    canvas.removeChild(entity[i].object);
+    if (typeof entity[i].object === "object"){
+      canvas.removeChild(entity[i].object);
+    }
   }
 
-  entity = []
+  entity = [];
   canvas.innerHTML = '<button onClick="startGame(); document.getElementById(\'start-btn\').remove();" id="start-btn">Start</button>';
   clearInterval(timerSec);
 }
@@ -148,43 +198,55 @@ function startScore() {
     }
     
     if (score === 1 || score % 10 === 0){
-      let lucky = Math.floor(Math.random() * 10) + 1
-      spawnEnemy();
+      let lucky = Math.floor(Math.random() * 10) + 1;
+      if (lucky <= 7){
+        spawnEnemy("enemy");
+      } else{
+        spawnEnemy("powerUp");
+      }
+      
     }
   }, 1000);
 }
 
-function spawnEnemy(){
+
+function spawnEnemy(type){
   let x, y;
 
   x = Math.floor(Math.random() * 385);
   y = Math.floor(Math.random() * 185);
 
-  let name = "enemy" + entity.length;
-  let enemy = CreateEntity(name, x, y);
-  randomizeColor(entity[enemy],256,20,20);
+  let name = type + entity.length;
+  let obj = entity[CreateEntity(name, x, y)];
 
-  let _this = entity[enemy]
-  let increX = Math.random() * 3;
-  let increY = Math.random() * 3;
+  if (type === "enemy"){
+    randomizeColor(obj,256,20,20);
+  } else{
+    obj.object.style.backgroundColor = "white";
+  }
+  
+
+  let _this = obj;
+  _this.increX = Math.random() * 3;
+  _this.increY = Math.random() * 3;
 
   _this.update = setInterval(() => {
     
-    _this.posX += increX;
-    _this.posY += increY;
+    _this.posX += _this.increX;
+    _this.posY += _this.increY;
     UpdateMovement(_this.object, _this.posX, _this.posY);
 
     if (_this.posY >= 185){
-      increY = increY * (-1);
+      _this.increY = _this.increY * (-1);
     }
     if (_this.posY <= 0){
-      increY = increY * (-1);
+      _this.increY = _this.increY * (-1);
     }
     if (_this.posX >= 385){
-      increX = increX * (-1);
+      _this.increX = _this.increX * (-1);
     }
     if (_this.posX <= 0){
-      increX = increX * (-1);
+      _this.increX = _this.increX * (-1);
     }
   },10);
 

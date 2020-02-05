@@ -11,6 +11,10 @@ class Entity {
     this.isJumping = false;
     this.direction = "right";
     this.collision = false;
+
+    this.increX = 0;
+    this.increY = 0;
+    this.affected = false;
     
     "use strict";
     let _this = this;
