@@ -27,7 +27,7 @@ class Entity {
           // Gravity will act only when the player jump or is falling
           this.isFalling = true;
           _this.posY += _this.gravityAcceleration;
-          _this.gravityAcceleration += 1 / 100;
+          _this.gravityAcceleration += _this.gravityForce / 100;
         }
         if (_this.posY > 184) {
           _this.gravityAcceleration = 0;
@@ -47,17 +47,20 @@ class Entity {
             _this.posX -= _this.acceleration;
           }
         }
-        if (_this.acceleration < 1.3) {
-          _this.acceleration += 1 / 100;
+        if (_this.acceleration < _this.speed) {
+          _this.acceleration += _this.speed / 100;
         }
       }
     }, 1);
 
     // Gravity
-    (this.gravity = false), (this.gravityAcceleration = 0);
+    this.gravity = false;
+    this.gravityForce = 1.5;
+    this.gravityAcceleration = 0;
 
     // Movement
     this.acceleration = 0;
+    this.speed = 1.5;
   }
 }
 /* CLASSES end */

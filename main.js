@@ -7,7 +7,7 @@ var mobileAndTabletcheck = function() {
 };
 
 /* DECLARATIONS */
-var playerIndex;
+var player;
 var minutes = 0;
 var seconds = 0;
 var wave = 0;
@@ -28,11 +28,11 @@ var TickEvent = setInterval(function() {
 }, 10);
 
 function startGame() {
-  playerIndex = CreateEntity("player", 192, 92);
-  entity[playerIndex].gravity = true;
-  entity[playerIndex].object.style.backgroundColor = "blue";
-  entity[playerIndex].object.style.zIndex = 1000;
-  entity[playerIndex].object.style.opacity = "1";
+  player = entity[CreateEntity("player", 192, 92)];
+  player.gravity = true;
+  player.object.style.backgroundColor = "blue";
+  player.object.style.zIndex = 1000;
+  player.object.style.opacity = "1";
   updateTime();
 }
 
@@ -64,32 +64,32 @@ window.addEventListener("keyup", function(e) {
 });
 
 function leftDown() {
-  entity[playerIndex].isMoving = true;
-  entity[playerIndex].direction = "left";
+  player.isMoving = true;
+  player.direction = "left";
 }
 function leftUp() {
-  if (entity[playerIndex].direction == "left") {
-    entity[playerIndex].isMoving = false;
+  if (player.direction == "left") {
+    player.isMoving = false;
   }
-  entity[playerIndex].acceleration = 0;
+  player.acceleration = 0;
 }
 function rightDown() {
-  entity[playerIndex].isMoving = true;
-  entity[playerIndex].direction = "right";
+  player.isMoving = true;
+  player.direction = "right";
 }
 function rightUp() {
-  if (entity[playerIndex].direction == "right") {
-    entity[playerIndex].isMoving = false;
+  if (player.direction == "right") {
+    player.isMoving = false;
   }
-  entity[playerIndex].acceleration = 0;
+  player.acceleration = 0;
 }
 function upDown() {
-  if (entity[playerIndex].isJumping === false) {
+  if (player.isJumping === false) {
     // When player jump, send an negative gravityAcceleration making the gravity goes to the
     // oposite direction, when the acceleration return to > 0, the player falls.
     // The smallest is the gravityAcceleration, higher is the jump
-    entity[playerIndex].isJumping = true;
-    entity[playerIndex].gravityAcceleration = -1.3;
+    player.isJumping = true;
+    player.gravityAcceleration = player.gravityForce * (-1);
   }
 }
 
@@ -110,8 +110,8 @@ function collision() {
   for (i = 0; i < entity.length; i++) {
     if (entity[i].name != "player") {
       if (
-        entity[i].posX - 15 < entity[playerIndex].posX && entity[playerIndex].posX < entity[i].posX + 15 &&
-        entity[i].posY - 15 < entity[playerIndex].posY && entity[playerIndex].posY < entity[i].posY + 15
+        entity[i].posX - 15 < player.posX && player.posX < entity[i].posX + 15 &&
+        entity[i].posY - 15 < player.posY && player.posY < entity[i].posY + 15
       ) {
         gameOver();
       }
