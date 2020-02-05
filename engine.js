@@ -28,6 +28,10 @@ class Entity {
           this.isFalling = true;
           _this.posY += _this.gravityAcceleration;
           _this.gravityAcceleration += _this.gravityForce / 100;
+          if (_this.posY <= 0){
+            _this.gravityAcceleration = 0;
+            _this.posY = 1;
+          }
         }
         if (_this.posY > 184) {
           _this.gravityAcceleration = 0;
