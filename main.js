@@ -129,17 +129,18 @@ function collision() {
   }
 }
 
+var bgcolor = "lightgrey"
+
 function powerUp(i){
   if (typeof entity[i].object === "object" && entity[j] !== null){
     canvas.removeChild(entity[i].object);
     entity[i] = null;
   }
-  
 
-  let lucky = Math.floor(Math.random() * 2);
+  let lucky = Math.floor(Math.random() * 3);
   // let lucky = 1;
 
-  if (lucky === 0){
+  if (lucky === 0){ // kill one enemy
     var j = 0;
     let deleted = true;
     for (j = 0; j < entity.length; j++){
@@ -152,7 +153,12 @@ function powerUp(i){
         }
       }
     }
-  } else if (lucky === 1){
+    canvas.style.backgroundColor = "darkred";
+    setTimeout(() => {
+      canvas.style.backgroundColor = bgcolor;
+    },100)
+  } else if (lucky === 1){ // slow every thing
+    console.log("devagarou");
     for (j = 0; j < entity.length; j++){
       if (typeof entity[j] === "object" && entity[j] !== null){
         entity[j].increX = entity[j].increX / 2
@@ -160,21 +166,37 @@ function powerUp(i){
         entity[j].affected = true;
       }
     }
+    canvas.style.backgroundColor = "lightblue";
+    bgcolor = "lightblue"
     setTimeout(() => {
       for (j = 0; j < entity.length; j++){
-        if (typeof entity[j] === "object" && entity[j] !== null && entity[j].affected){
+        if (typeof entity[j] === "object" && entity[j] !== null && entity[j].affected && entity[i].name.substring(0, 5) === "enemy"){
           entity[j].increX = entity[j].increX * 2
           entity[j].increY = entity[j].increY * 2
         }
+        canvas.style.backgroundColor = "lightgrey";
+        bgcolor = "lightgrey"
       }
     },10000)
+  } else if (lucky === 2) { // increase player speed
+    player.speed = 3;
+    player.gravityForce = 3;
+    console.log("rapidou");
+    canvas.style.backgroundColor = "lightyellow";
+    bgcolor = "lightyellow"
+    setTimeout(() => {
+      player.speed = 1.5;
+      player.gravityForce = 1.5;
+      canvas.style.backgroundColor = "lightgrey";
+      bgcolor = "lightgrey";
+    },5000);
   }
 }
 
 function gameOver() {
 
   for (i = 0; i < entity.length; i++) {
-    if (typeof entity[i].object === "object"){
+    if (typeof entity[i] === "object" && entity[i] !== null){
       canvas.removeChild(entity[i].object);
     }
   }
@@ -218,17 +240,21 @@ function spawnEnemy(type){
 
   let name = type + entity.length;
   let obj = entity[CreateEntity(name, x, y)];
+  
+   let _this = obj;
+  _this.increX = Math.random() * 3;
+  _this.increY = Math.random() * 3;
 
   if (type === "enemy"){
     randomizeColor(obj,256,20,20);
   } else{
-    obj.object.style.backgroundColor = "white";
+    obj.object.style.backgroundColor = "lightgreen";
+    _this.increX = Math.random() + 0.001;
+    _this.increY = Math.random() * 2;
   }
   
 
-  let _this = obj;
-  _this.increX = Math.random() * 3;
-  _this.increY = Math.random() * 3;
+ 
 
   _this.update = setInterval(() => {
     
