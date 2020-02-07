@@ -265,7 +265,7 @@ function startScore() {
     
     if (score === 1 || score % 10 === 0){
       let lucky = Math.floor(Math.random() * 10) + 1;
-      if (lucky <= 7){
+      if (lucky <= 8){
         spawnEnemy("enemy");
       } else{
         spawnEnemy("powerUp");
