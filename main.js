@@ -36,6 +36,47 @@ function startGame() {
   player.object.style.zIndex = 1000;
   player.object.style.opacity = "1";
   startScore();
+  toggleMenu(false);
+}
+
+function showScoreboard() {
+  toggleMenu(false);
+  let scoreBoard = document.getElementById("Scoreboard");
+  scoreBoard.style.display = "block";
+
+  requestGET();
+  //createTable();
+}
+
+function closeGO() {
+  document.getElementById("gameOver").style.display = "none";
+  toggleMenu(true);
+}
+
+function saveGO() {
+  document.getElementById("gameOver").style.display = "none";
+
+  if (document.getElementById("name").value){
+    requestPOST(document.getElementById("name").value, score)
+  }
+
+  closeGO();
+}
+
+function closeScoreboard() {
+  let scoreBoard = document.getElementById("Scoreboard");
+  scoreBoard.style.display = "none";
+  toggleMenu(true);
+}
+
+function toggleMenu(bool) {
+  let menu = document.getElementById("menu");
+
+  if (!bool){
+    menu.style.display = "none";
+  } else{
+    menu.style.display = "block";
+  }
 }
 
 /* GAME EVENTS begin */
@@ -189,7 +230,7 @@ function powerUp(i){
       player.gravityForce = 1.5;
       canvas.style.backgroundColor = "lightgrey";
       bgcolor = "lightgrey";
-    },5000);
+    },10000);
   }
 }
 
@@ -202,8 +243,11 @@ function gameOver() {
   }
 
   entity = [];
-  canvas.innerHTML = '<button onClick="startGame(); document.getElementById(\'start-btn\').remove();" id="start-btn">Start</button>';
   clearInterval(timerSec);
+
+  toggleMenu(false);
+  document.getElementById("gameOver").style.display = "block";
+  document.getElementById("scoreGO").innerHTML = score;
 }
 
 var score = 0;

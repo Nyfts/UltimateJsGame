@@ -1,21 +1,32 @@
-var xmlHttp = new XMLHttpRequest();
+var JSONRequest;
 
-xmlHttp.onreadystatechange = function() {
-  if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
-    callback(xmlHttp.responseText);
-  }
-  
-  xmlHttp.open("GET", "http://localhost:5000/api/score", true); // true for asynchronous 
-  xmlHttp.send(null);
+const requestGET = async () => {
+  const response = await fetch('http://localhost:5000/api/score');
+  JSONRequest = await response.json();
+  createTable(JSONRequest);
 }
 
-function createTable() {
-  // request = JSON.parse(JSONRequest)
-  var DOMtable = "<table><tr><td>Name</td><td>Score</td></tr>"
-  for (i = 0; i < request.length; i++) {
+const requestPOST = async (name, value) => {
+  const response = await fetch('http://localhost:5000/api/score', {
+    method: 'POST',
+    body: '{"name":"'+name+'","value":'+value+'}', // string or object
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  });
+  JSONRequest = await response.json(); //extract JSON from the http response
+  // do something with myJson
+}
+
+
+function createTable(jsonObj) {
+  var DOMtable = "<table><tr><td><b>Position</b></td><td><b>Name</b></td><td><b>Score</b></td></tr>"
+  console.log(jsonObj);
+  for (i = 0; i < jsonObj.length; i++) {
     DOMtable += "<tr>";
-    DOMtable += "<td>"+request[i].name+"</td><td>"+request[1].value+"</td></tr>";
+    DOMtable += "<td>"+(i+1)+"</td><td>"+jsonObj[i].name+"</td><td>"+jsonObj[i].value+"</td></tr>";
   }
-  DOMtable += "</table>";
-  document.getElementById("body").innerHTML = DOMtable;
+  DOMtable += "</table><button style='margin-bottom: 0px;' onclick='closeScoreboard()'>Close</button>";
+  console.log(DOMtable);
+  document.getElementById("Scoreboard").innerHTML = DOMtable;
 }
