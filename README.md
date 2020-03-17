@@ -2,10 +2,10 @@
 
 A simple game made without any library, just javascript, to perfect my skills and fundamentals
 
-To play open http://nyfts.github.io/
-Use WASD to control the player (blue circle)
-Avoid the enemys (circles of red tones)
-Catch the powerups (green circles)
+To play open http://nyfts.github.io/ <br/>
+Use WASD to control the player (blue circle) <br/>
+Avoid the enemys (circles of red tones) <br/>
+Catch the powerups (green circles) <br/>
 
 ![](Sample.gif)
 
