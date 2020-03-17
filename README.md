@@ -6,3 +6,5 @@ There is a simple API developed in .net core for the score system, named ScoreJs
 It is not running on any server at the moment, so there is no score: /
 
 To play open http://nyfts.github.io/ and play with WASD
+
+![](Sample.gif)
