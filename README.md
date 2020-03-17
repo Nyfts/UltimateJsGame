@@ -11,5 +11,8 @@ Catch the powerups (green circles) <br/>
 
 ## Scoreboard
 
-There is a simple API developed in .net core for the score system, named ScoreJs.API, located in https://github.com/Nyfts/ScoreJs.API.
-It is not running on any server at the moment, so there is no score: /
+There is a simple API developed in .NET core for the score system, named ScoreJs.API, and has its own repository in https://github.com/Nyfts/ScoreJs.API.
+
+![](scoreboard.png)
+
+To make it work, just open the file ".\ScoreJs.API\startServer.bat"
