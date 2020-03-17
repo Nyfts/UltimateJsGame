@@ -1,13 +1,14 @@
 var JSONRequest;
 
 const requestGET = async () => {
-  const response = await fetch('http://13.92.187.25/api/score');
+  createTable([{id: 29, name: "Loading", value: "Loading"}])
+  const response = await fetch('http://localhost:5000/api/score');
   JSONRequest = await response.json();
   createTable(JSONRequest);
 }
 
 const requestPOST = async (name, value) => {
-  const response = await fetch('http://13.92.187.25/api/score', {
+  const response = await fetch('http://localhost:5000/api/score', {
     method: 'POST',
     body: '{"name":"'+name+'","value":'+value+'}', // string or object
     headers: {
