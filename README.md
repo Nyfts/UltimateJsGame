@@ -1,8 +1,8 @@
 # Ultimate Javascript Game
 
-A simple game made without any library, just javascript, to perfect my skills and fundamentals
+A simple game made using javascript.
 
-To play open http://nyfts.github.io/ <br/>
+You can play in http://nyfts.github.io/ <br/>
   
 Avoid the enemys (circles of red tones) <br/>
 Catch the powerups (green circles) <br/>
@@ -13,6 +13,12 @@ Catch the powerups (green circles) <br/>
 
 There is a simple API developed in .NET core for the score system, named ScoreJs.API, and has its own repository in https://github.com/Nyfts/ScoreJs.API.
 
-![](scoreboard.png)
+You can run this local server by openning the file ".\ScoreJs.API\startServer.bat"  
+or using the command shell
+```
+cd .\ScoreJs.API\
+dotnet run
+```
+You must have dotnet core version 3.1.101 or superior to run the server
 
-To make it work, just open the file ".\ScoreJs.API\startServer.bat"
+![](scoreboard.png)
